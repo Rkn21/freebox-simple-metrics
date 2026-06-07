@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Freebox Simple Metrics",
+        "description": "Connect to the Freebox OS API. Leave app token empty to request a new authorization on the Freebox Server.",
+        "data": {
+          "host": "Freebox host",
+          "name": "Name",
+          "scan_interval": "Scan interval",
+          "timeout": "Timeout",
+          "app_id": "App ID",
+          "app_token": "Existing app token"
+        }
+      },
+      "authorize": {
+        "title": "Authorize Freebox Simple Metrics",
+        "description": "Validate the authorization request on the Freebox Server for host {host}. Track ID: {track_id}. Then submit this form.",
+        "data": {}
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to the Freebox API.",
+      "invalid_auth": "Freebox authorization failed.",
+      "pending": "Authorization is still pending on the Freebox Server.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This Freebox is already configured.",
+      "denied": "Authorization was denied on the Freebox Server.",
+      "timeout": "Authorization timed out.",
+      "reauth_required": "Restart the setup flow."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Freebox Simple Metrics options",
+        "data": {
+          "host": "Freebox host",
+          "scan_interval": "Scan interval",
+          "timeout": "Timeout"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to the Freebox API."
+    }
+  }
+}

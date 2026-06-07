@@ -1,0 +1,18 @@
+{
+  "domain": "freebox_simple_metrics",
+  "name": "Freebox Simple Metrics",
+  "codeowners": [
+    "@Rkn21"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/Rkn21/freebox-simple-metrics",
+  "homeassistant": "2025.1.0",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/Rkn21/freebox-simple-metrics/issues",
+  "loggers": [
+    "custom_components.freebox_simple_metrics"
+  ],
+  "requirements": [],
+  "version": "1.0.0"
+}

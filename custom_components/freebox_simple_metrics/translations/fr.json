@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Freebox Simple Metrics",
+        "description": "Connexion a l'API Freebox OS. Laissez le token vide pour demander une nouvelle autorisation sur la Freebox Server.",
+        "data": {
+          "host": "Hote Freebox",
+          "name": "Nom",
+          "scan_interval": "Intervalle de collecte",
+          "timeout": "Delai d'attente",
+          "app_id": "App ID",
+          "app_token": "Token existant"
+        }
+      },
+      "authorize": {
+        "title": "Autoriser Freebox Simple Metrics",
+        "description": "Validez la demande sur la Freebox Server pour l'hote {host}. Track ID : {track_id}. Validez ensuite ce formulaire.",
+        "data": {}
+      }
+    },
+    "error": {
+      "cannot_connect": "Connexion impossible a l'API Freebox.",
+      "invalid_auth": "Autorisation Freebox invalide.",
+      "pending": "L'autorisation est encore en attente sur la Freebox Server.",
+      "unknown": "Erreur inattendue."
+    },
+    "abort": {
+      "already_configured": "Cette Freebox est deja configuree.",
+      "denied": "L'autorisation a ete refusee sur la Freebox Server.",
+      "timeout": "L'autorisation a expire.",
+      "reauth_required": "Relancez la configuration."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options Freebox Simple Metrics",
+        "data": {
+          "host": "Hote Freebox",
+          "scan_interval": "Intervalle de collecte",
+          "timeout": "Delai d'attente"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Connexion impossible a l'API Freebox."
+    }
+  }
+}
