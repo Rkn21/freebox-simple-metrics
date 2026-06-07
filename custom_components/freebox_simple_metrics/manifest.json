@@ -6,7 +6,6 @@
   ],
   "config_flow": true,
   "documentation": "https://github.com/Rkn21/freebox-simple-metrics",
-  "homeassistant": "2025.1.0",
   "integration_type": "hub",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/Rkn21/freebox-simple-metrics/issues",
@@ -14,5 +13,5 @@
     "custom_components.freebox_simple_metrics"
   ],
   "requirements": [],
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

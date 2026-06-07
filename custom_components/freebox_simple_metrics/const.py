@@ -13,7 +13,7 @@ DEFAULT_SCAN_INTERVAL = 30
 DEFAULT_TIMEOUT = 10
 DEFAULT_APP_ID = "fr.rkn21.freebox_simple_metrics"
 APP_NAME = "Freebox Simple Metrics"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.0.1"
 
 CONF_APP_ID = "app_id"
 CONF_APP_TOKEN = "app_token"
