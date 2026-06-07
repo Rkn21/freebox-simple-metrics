@@ -36,7 +36,7 @@ _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL_SELECTOR = selector.NumberSelector(
     selector.NumberSelectorConfig(
-        min=10,
+        min=5,
         max=3600,
         step=1,
         mode=selector.NumberSelectorMode.BOX,

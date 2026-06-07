@@ -5,7 +5,7 @@ const haUrl = process.env.HA_WS_URL || "ws://homeassistant.local:8123/api/websoc
 const haToken = process.env.HA_TOKEN;
 const freeboxAppToken = process.env.FREEBOX_APP_TOKEN;
 const freeboxAppId = process.env.FREEBOX_APP_ID || "fr.rkn21.freebox_simple_metrics";
-const freeboxHost = process.env.FREEBOX_HOST || "192.168.0.254";
+const freeboxHost = process.env.FREEBOX_HOST || "192.168.1.254";
 const entryName = process.env.FREEBOX_ENTRY_NAME || "Freebox Simple Metrics";
 
 if (!haToken) {

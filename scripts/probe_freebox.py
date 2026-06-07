@@ -17,7 +17,7 @@ import urllib.error
 import urllib.request
 
 
-HOST = os.environ.get("FREEBOX_HOST", "192.168.0.254")
+HOST = os.environ.get("FREEBOX_HOST", "192.168.1.254")
 APP_ID = os.environ.get("FREEBOX_APP_ID", "fr.rkn21.freebox_simple_metrics")
 APP_TOKEN = os.environ.get("FREEBOX_APP_TOKEN")
 

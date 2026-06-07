@@ -8,12 +8,12 @@ DOMAIN = "freebox_simple_metrics"
 PLATFORMS = [Platform.SENSOR, Platform.BINARY_SENSOR]
 
 DEFAULT_NAME = "Freebox Simple Metrics"
-DEFAULT_HOST = "192.168.0.254"
+DEFAULT_HOST = "192.168.1.254"
 DEFAULT_SCAN_INTERVAL = 30
 DEFAULT_TIMEOUT = 10
 DEFAULT_APP_ID = "fr.rkn21.freebox_simple_metrics"
 APP_NAME = "Freebox Simple Metrics"
-APP_VERSION = "1.0.1"
+APP_VERSION = "1.0.2"
 
 CONF_APP_ID = "app_id"
 CONF_APP_TOKEN = "app_token"

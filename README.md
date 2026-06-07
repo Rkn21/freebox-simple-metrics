@@ -35,7 +35,8 @@ It only reads Freebox OS API data after authentication.
 
 The normal setup flow does not ask for the Freebox admin password.
 
-1. Enter the Freebox host, usually `192.168.0.254`.
+1. Enter the Freebox host, usually `192.168.1.254`.
+   If your Freebox uses another LAN subnet, enter the matching address, for example `192.168.0.254`.
 2. Submit the form.
 3. Validate the authorization request on the Freebox Server display/button.
 4. Submit the next Home Assistant form to finish setup.
@@ -45,8 +46,9 @@ Leave the token empty for the normal authorization flow.
 
 ## Defaults
 
-- Host: `192.168.0.254`
+- Host: `192.168.1.254`
 - Scan interval: `30` seconds
+- Minimum scan interval: `5` seconds
 - Timeout: `10` seconds
 - App id: `fr.rkn21.freebox_simple_metrics`
 
