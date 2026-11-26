@@ -9,7 +9,7 @@ Connection metrics:
 - WAN state, media, type, IPv4, IPv6 and IPv4 port range
 - Current upload/download rates
 - Advertised upload/download bandwidth
-- Upload/download byte counters
+- Upload/download byte totals guarded against counter resets and impossible jumps
 - FTTH link, SFP presence, signal, vendor, model, serial and optical power
 - xDSL status, rates, SNR, attenuation and error counters when available
 
@@ -22,6 +22,11 @@ Switch metrics:
 
 The integration has no Home Assistant actions, services, switches, buttons, selects or write entities.
 It only reads Freebox OS API data after authentication.
+
+The WAN totals retain their entity IDs and history across upgrades. Impossible jumps
+do not contribute to usage. When the Freebox changes its counter range, the total
+resumes from confirmed increments. Home Assistant restores the last total after
+restart and does not estimate traffic during long polling gaps.
 
 ## Installation with HACS
 

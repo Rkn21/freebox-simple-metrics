@@ -4,9 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+import logging
+from time import monotonic
 from typing import Any
 
 from homeassistant.components.sensor import (
+    RestoreSensor,
     SensorDeviceClass,
     SensorEntity,
     SensorEntityDescription,
@@ -14,13 +17,20 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.const import UnitOfDataRate, UnitOfInformation, UnitOfTime
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 
 from .const import ATTR_PORT_ID, ATTR_PORT_NAME
 from .coordinator import FreeboxRuntimeData
 from .entity import FreeboxBaseEntity
+from .traffic_counter import TrafficCounter
+
+_LOGGER = logging.getLogger(__name__)
+_WAN_COUNTER_BANDWIDTH = {
+    "downloaded_data": "bandwidth_down",
+    "uploaded_data": "bandwidth_up",
+}
 
 
 def _result(data: dict[str, Any], key: str) -> dict[str, Any]:
@@ -514,7 +524,11 @@ async def async_setup_entry(
     runtime: FreeboxRuntimeData = entry.runtime_data
     coordinator = runtime.coordinator
     entities: list[SensorEntity] = [
-        FreeboxSensor(coordinator, description)
+        (
+            FreeboxWanCounterSensor(coordinator, description)
+            if description.key in _WAN_COUNTER_BANDWIDTH
+            else FreeboxSensor(coordinator, description)
+        )
         for description in (*CONNECTION_SENSORS, *FTTH_SENSORS, *XDSL_SENSORS)
     ]
 
@@ -554,6 +568,50 @@ class FreeboxSensor(FreeboxBaseEntity, SensorEntity):
     def extra_state_attributes(self) -> dict[str, Any] | None:
         """Return extra state attributes."""
         return self.entity_description.attrs_fn(self.coordinator.data or {})
+
+
+class FreeboxWanCounterSensor(FreeboxSensor, RestoreSensor):
+    """Expose a stable WAN total under the existing statistic ID."""
+
+    async def async_added_to_hass(self) -> None:
+        """Restore the total without trusting an unobserved interval."""
+        last = await self.async_get_last_sensor_data()
+        interval = self.coordinator.update_interval
+        self._counter = TrafficCounter(
+            max_gap=max(60, 4 * interval.total_seconds()) if interval else 60,
+            restored_total=(
+                last.native_value
+                if last and last.native_unit_of_measurement == UnitOfInformation.BYTES
+                else None
+            ),
+        )
+        self._update_counter()
+        await super().async_added_to_hass()
+
+    @property
+    def native_value(self) -> int | None:
+        """Return the accepted byte total."""
+        return self._counter.total if hasattr(self, "_counter") else None
+
+    def _update_counter(self) -> None:
+        data = self.coordinator.data or {}
+        bandwidth = _result(data, "connection").get(
+            _WAN_COUNTER_BANDWIDTH[self.entity_description.key]
+        )
+        was_pending = self._counter.pending
+        self._counter.update(self.entity_description.value_fn(data), monotonic(), bandwidth)
+        if self._counter.total is not None and self._counter.pending and not was_pending:
+            _LOGGER.warning(
+                "Ignoring a discontinuity in the Freebox WAN counter %s",
+                self.entity_description.key,
+            )
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Process each successful poll before publishing the entity state."""
+        if self.coordinator.last_update_success:
+            self._update_counter()
+        super()._handle_coordinator_update()
 
 
 class FreeboxPortSensor(FreeboxBaseEntity, SensorEntity):
